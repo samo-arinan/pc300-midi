@@ -18,7 +18,7 @@ Cubase などの DAW からは普通の MIDI キーボードとして見えま�
 
 - 確認した環境: Apple Silicon の Mac、Cubase 14 + HALion Sonic
 - 鍵盤の入力のみ（PC-300 へ MIDI を送る向きは未対応）
-- PC-300 は MIDI チャンネル 8 で送ってきます。DAW 側で「All MIDI Inputs」やチャンネル指定なしにしておけばそのまま鳴ります
+- PC-300 は MIDI チャンネル 8 で送ってきますが、アプリがチャンネル 1 に書き換えて流します（1ch で受ける音源の単体アプリでもそのまま鳴るように）
 
 ### 仕組み
 
@@ -72,7 +72,7 @@ so DAWs such as Cubase see it as an ordinary MIDI keyboard.
 
 - Tested on: Apple Silicon Mac, Cubase 14 + HALion Sonic
 - Input only (sending MIDI to the PC-300 is not supported)
-- The PC-300 transmits on MIDI channel 8. Set your DAW track input to "All MIDI Inputs" / any channel and it just plays
+- The PC-300 transmits on MIDI channel 8. The app rewrites channel messages to channel 1, so standalone instruments that listen on channel 1 play without extra setup
 
 ### How it works
 

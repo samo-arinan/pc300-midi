@@ -43,7 +43,11 @@ static void forward(const unsigned char *buf, int n) {
     for (int i = 0; i + 4 <= n; i += 4) {
         int len = cin_len(buf[i] & 0x0F);
         if (!len) continue;
-        p = MIDIPacketListAdd(pl, sizeof pl_buf, p, 0, len, &buf[i + 1]);
+        Byte msg[3] = {buf[i + 1], buf[i + 2], buf[i + 3]};
+        // PC-300 は ch8 固定で送ってくる。HALion の単体アプリなど「1ch で受ける」物でそのまま鳴るよう、
+        // チャンネルメッセージ（0x80〜0xEF）は ch1 に書き換える
+        if (msg[0] >= 0x80 && msg[0] < 0xF0) msg[0] &= 0xF0;
+        p = MIDIPacketListAdd(pl, sizeof pl_buf, p, 0, len, msg);
         if (!p) break;
     }
     if (pl->numPackets) MIDIReceived(g_src, pl);
